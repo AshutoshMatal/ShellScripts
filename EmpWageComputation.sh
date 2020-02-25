@@ -1,4 +1,4 @@
-#/bin/bash -x
+#!/bin/bash -x
 echo "Welcome to Employee Wage Computation"
 #VARIABLES
 isPresent=1
@@ -8,7 +8,7 @@ PartTime=4
 totalWorkingDays=0
 totalWorkHours=0
 #CONSTANTS
-MAX_HRS_IN_MONTH=4
+MAX_HRS_IN_MONTH=10
 PERHOUR=20
 NUM_WORKING_DAYS=20
 	# CALCULATE BY USING  FUNCTION
@@ -30,6 +30,12 @@ function getWorkingHours()
 		#CALCULATING  WORKING HOURS
 			echo "$WorkHrs"
 }
+function calcDailyWage()
+{
+	local works=$1
+	wage=$(($WorkHrs*$PERHOUR))
+	echo $wage
+}
 
 while [[ totalWorkHours -lt  $MAX_HRS_IN_MONTH && totalWorkingDays -lt $NUM_WORKING_DAYS  ]]
 do
@@ -37,7 +43,10 @@ do
 				WorkHrs="$( getWorkingHours $((RANDOM%3+1)) )"
 			#FINDING  THE  TOTAL EMPLOYEE HOURS
 				totalWorkHours=$(($totalWorkHours + $WorkHrs ))
+				empDailyWage[$totalWorkingDays]="$( calcDailyWage $workHours )"
 done
    totalSalary=$(($totalWorkHours * $PERHOUR));
 	echo "Total hours :$totalWorkHours"
 	echo "Total salary :$totalSalary"
+	#BY USING THE ARRAY WE ARE PRINTING 
+	echo "Daily Wage 	" ${empDailyWage[@]}	
