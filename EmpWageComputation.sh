@@ -7,6 +7,7 @@ FullDay=8
 PartTime=4
 totalWorkingDays=0
 totalWorkHours=0
+day=1
 #CONSTANTS
 MAX_HRS_IN_MONTH=10
 PERHOUR=20
@@ -44,9 +45,15 @@ do
 			#FINDING  THE  TOTAL EMPLOYEE HOURS
 				totalWorkHours=$(($totalWorkHours + $WorkHrs ))
 				empDailyWage[$totalWorkingDays]="$( calcDailyWage $workHours )"
+				day=$((day + 1))
 done
    totalSalary=$(($totalWorkHours * $PERHOUR));
 	echo "Total hours :$totalWorkHours"
 	echo "Total salary :$totalSalary"
 	#BY USING THE ARRAY WE ARE PRINTING 
 	echo "Daily Wage 	" ${empDailyWage[@]}	
+	echo "All Keys " ${!empDailyWage[@]}
+for day in ${!empDailyWage[@]} 
+do
+ 	echo " $day :${empDailyWage[$day]} "
+done
